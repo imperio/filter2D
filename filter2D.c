@@ -6,28 +6,28 @@
 long double **f(int N,int M,double sigma)
 {
       long double **p;
-      double i,j,top=0.0;
-      int k,x;
+      double y,x,top=0.0;
+      int i,j;
        //allocate memory for p
-       p=(long double **)malloc(M*sizeof(long double*));
-         for(x=0;x<N;x++){
-                          p[x]=(long double *)malloc(N*sizeof(long double));}
+       p=(long double **)malloc(N*sizeof(long double*));
+         for(i=0;i<M;i++){
+                          p[i]=(long double *)malloc(M*sizeof(long double));}
        //find initial x and y values in equation                
-       i= -(double)(N-1)/2; 
-       j= -(double)(M-1)/2;
+       x= -(double)(M-1)/2; 
+       y= -(double)(N-1)/2;
        //exponential
-       for(x=0;x<M;x++){
-                        for(k=0;k<N;k++){
-           p[x][k]=exp(-((i*i)+(j*j))/(2*sigma*sigma));
-           i++;}
-           j++;
-           i= -(double)(N-1)/2;
-           top+=p[x][k]; //sum of the values
+       for(i=0;i<N;i++){
+                        for(j=0;j<M;j++){
+           p[i][j]=exp(-((x*x)+(y*y))/(2*sigma*sigma));
+           x++;}
+           y++;
+           x= -(double)(M-1)/2;
+           //top+=p[i][j]; //sum of the values
            }
            
-           for (x=0;x<M;x++){
-              for(k=0;k<N;k++){
-                 p[x][k]/=top;}} //divide elements of the array 
+           //for (i=0;i<N;i++){
+              //for(j=0;j<M;j++){
+                 //p[i][j]/=top;}} //divide elements of the array 
                                      //  by sum of the values 
            return p;
 }
@@ -65,7 +65,7 @@ int main()
     printf("enter sigma");
     scanf("%lf",&sigma);
     //take the elements of B from the function f
-    B=f(bsutun,bsatir,sigma);
+    B=f(bsatir,bsutun,sigma);
     //print B
     for(i=0;i<bsatir;i++){
                           for(a=0;a<bsutun;a++){
@@ -79,15 +79,13 @@ int main()
     
     
     //create array C
-    for(x=0;x<bsatir;){
-       for(y=0;y<bsutun;){
-           for(k=0;k<asatir;){
-              for(m=0;m<asutun;){
+    for(x=0;x<bsatir;x++){
+       for(y=0;y<bsutun;y++){
+           for(k=0;k<asatir;k++){
+              for(m=0;m<asutun;m++){
                  sum+=(long double)A[i][j]*B[k][m];
-                 i++; j++;
-                 k++; m++;}}
+                 i++; j++;}}
                  C[x][y]=sum;
-                 k=0; m=0;
                  i=i-(k-1);
                  j=j-(m-1);
                  sum=0.0;}}
